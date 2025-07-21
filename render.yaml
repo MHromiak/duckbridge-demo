@@ -1,0 +1,15 @@
+services:
+  - type: worker
+    name: duckbridge
+    runtime: python
+    buildCommand: ""
+    startCommand: python render/start_duckbridge.py
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: HOST
+        value: "0.0.0.0"
+      - key: AUTH
+        value: "MySuperSecretKey"
+      - key: DB_PATH
+        value: "omop_cdm.db"

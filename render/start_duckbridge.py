@@ -4,7 +4,7 @@ import signal, os, sys, threading, time
 HOST = os.getenv("HOST", "0.0.0.0")
 PORT = os.getenv("PORT", "8080")
 AUTH = os.getenv("AUTH", "")
-DB_PATH = os.getcwd() + "\\" + os.getenv("DB_PATH", "default.db")
+DB_PATH = os.path.join(os.getcwd(), os.getenv("DB_PATH", "default.db"))
 
 bridge = None
 shutdown_event = threading.Event()
@@ -40,9 +40,5 @@ if __name__ == "__main__":
     start_duckdb_bridge()
     print("Bridge is running. Press Ctrl+C to stop.")
 
-    try:
-        while not shutdown_event.is_set():
-            time.sleep(1)
-    except KeyboardInterrupt:
-        stop_duckdb_bridge(signal.SIGINT, None)
+    shutdown_event.wait()
 
